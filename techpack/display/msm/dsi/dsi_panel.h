@@ -21,6 +21,8 @@
 #include "dsi_parser.h"
 #include "msm_drv.h"
 
+struct dsi_display;
+
 #define MAX_BL_LEVEL 4096
 #define MAX_BL_SCALE_LEVEL 1024
 #define MAX_SV_BL_SCALE_LEVEL 65535
@@ -225,6 +227,8 @@ struct dsi_panel {
 	enum dsi_dms_mode dms_mode;
 
 	bool sync_broadcast_en;
+	bool in_aod;
+	int doze_brightness;  /* 0=none, 1=HBM, 2=LBM */
 
 	int panel_test_gpio;
 	int power_mode;
@@ -355,6 +359,12 @@ void dsi_panel_ext_bridge_put(struct dsi_panel *panel);
 
 void dsi_panel_calc_dsi_transfer_time(struct dsi_host_common_cfg *config,
 		struct dsi_display_mode *mode, u32 frame_threshold_us);
+int dsi_panel_set_doze_backlight(struct dsi_display *display);
+int dsi_panel_get_doze_backlight(struct dsi_display *display, char *buf);
+int dsi_panel_disp_param_send(struct dsi_display *display, int cmd);
+ssize_t dsi_panel_disp_param_get(struct dsi_display *display, char *buf);
+ssize_t dsi_panel_mipi_reg_read(struct dsi_panel *panel, char *buf);
+ssize_t dsi_panel_mipi_reg_write(struct dsi_panel *panel, char *buf, size_t count);
 
 int dsi_panel_apply_hbm_mode(struct dsi_panel *panel);
 

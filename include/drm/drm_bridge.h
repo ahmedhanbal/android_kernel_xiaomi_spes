@@ -238,6 +238,9 @@ struct drm_bridge_funcs {
 	 */
 	void (*enable)(struct drm_bridge *bridge);
 
+	void (*disp_param_set)(struct drm_bridge *bridge, int cmd);
+	ssize_t (*disp_param_get)(struct drm_bridge *bridge, char *pbuf);
+
 	/**
 	 * @atomic_pre_enable:
 	 *
